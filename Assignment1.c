@@ -15,7 +15,6 @@
 #include <unistd.h> //this is used to get POSIX functions like access(), unlink() close()
 #include <dirent.h> //its opens and read directory basically we can use it for directory manipulation
 #include <fcntl.h> //file control options like open() read() , write() etc
-
 // Global buffers for matching and tracking
 //Here we are defining a variable which will store basically an argument given by the user , its 256 because it can be a path to a file
 char userarg[256];
