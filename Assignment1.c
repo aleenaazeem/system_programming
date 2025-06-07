@@ -27,7 +27,6 @@ int counting_directories = 0;
 //this is used to get the size of the file in bytes
 off_t totalSize = 0;
 off_t maxFileSize = 0; 
-
 //triggered by nftw()
 //checks if the current file matches the target file and prints it
 int recur_search(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
