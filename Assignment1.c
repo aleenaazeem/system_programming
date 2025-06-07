@@ -8,7 +8,7 @@
 #define _XOPEN_SOURCE 500 //This will enable the feature like nftw() as we are getting Xopen version 500
 #include <limits.h>//it gives a place to store the full file or directory paths
 #include <ftw.h> //This is the header library for nftw() walking through directory tree
-#include <stdio.h> //Standard library to use like printf(), perror(), etc
+#include <stdio.h> //Standard library to use like printf(), perror()
 #include <stdlib.h> //this helps in managing dynamic memory managemnt , exit() etc
 #include <string.h>  //we access the string functions using this library function
 #include <sys/stat.h> //this is used to get the size of the file
