@@ -5,7 +5,6 @@
     Course: Advanced Computer Programming
     Video Link: https://drive.google.com/file/d/1ZJtIX9bZdDmEgaK4qCQApx2BSGcSwaVr/view?usp=sharing
  */
-
 #define _XOPEN_SOURCE 500 //This will enable the feature like nftw() as we are getting Xopen version 500
 #include <limits.h>//it gives a place to store the full file or directory paths
 #include <ftw.h> //This is the header library for nftw() walking through directory tree
