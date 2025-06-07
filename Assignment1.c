@@ -1,5 +1,4 @@
 /*  Assignment 1
-    Video Link:
     Name: Aleena Ali Azeem
     Roll number: 110190830
     Course: Advanced Computer Programming
