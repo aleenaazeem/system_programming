@@ -1,0 +1,77 @@
+// ptree25s_Firstname_Lastname_SID.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <ctype.h>
+#include <unistd.h>
+
+#define MAX_PROC 32768
+
+// Store parent of each process
+int ppid_map[MAX_PROC];
+
+// Helper: Read PPID from /proc/[pid]/status
+int get_ppid(int pid) {
+    char path[64];
+    sprintf(path, "/proc/%d/status", pid);
+    FILE *fp = fopen(path, "r");
+    if (!fp) return -1;
+
+    char line[256];
+    int ppid = -1;
+    while (fgets(line, sizeof(line), fp)) {
+        if (strncmp(line, "PPid:", 5) == 0) {
+            sscanf(line + 5, "%d", &ppid);
+            break;
+        }
+    }
+    fclose(fp);
+    return ppid;
+}
+
+// Check if process_id is in the subtree of root_process
+int is_descendant(int root, int pid) {
+    while (pid != 0 && pid != root) {
+        pid = ppid_map[pid];
+    }
+    return (pid == root);
+}
+
+// Build the PPID map
+void build_ppid_map() {
+    DIR *proc = opendir("/proc");
+    struct dirent *entry;
+
+    while ((entry = readdir(proc)) != NULL) {
+        if (!isdigit(entry->d_name[0]))
+            continue;
+
+        int pid = atoi(entry->d_name);
+        int ppid = get_ppid(pid);
+        if (pid >= 0 && pid < MAX_PROC)
+            ppid_map[pid] = ppid;
+    }
+    closedir(proc);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s root_process process_id [option]\n", argv[0]);
+        return 1;
+    }
+
+    int root = atoi(argv[1]);
+    int pid = atoi(argv[2]);
+
+    build_ppid_map();
+
+    if (is_descendant(root, pid)) {
+        printf("%d %d\n", pid, ppid_map[pid]);
+    } else {
+        printf("Process %d does not belong to the process subtree rooted at %d\n", pid, root);
+    }
+
+    return 0;
+}
