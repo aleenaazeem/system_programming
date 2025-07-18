@@ -1,0 +1,36 @@
+
+#!/bin/bash
+#First we will print this statement on the command
+echo "Enter file name:"
+read file
+echo "The name of the file is $file"
+
+# Check if file exists
+if [ -e "$file" ]; then
+  # Check if file is writable
+  if [ -w "$file" ]; then
+    echo "You have write permission on $file"
+    ##Lastly check if size > 0 and print the message "The size of $file > 0, the output og ls will now be appended
+    if [ "$filesize" -gt 0 ]; then
+      echo "The size of $file > 0, the output of ls will now be appended" >> "$file"
+      ls >> "$file"
+    else
+         #Here we will be printing the message that the file size is zero
+      echo "The size of $file = 0, the output of ls will now be newly added" > "$file"
+      ls >> "$file"
+    fi
+
+  else
+
+
+    echo "You do NOT have write permission on $file. Granting permission now..."
+    chmod +w "$file"
+    echo "Write permission has been granted" > "$file"
+  fi
+
+else
+  #lastly we will print that the files doesnt exist
+  echo "$file does not exist"
+fi
+
+
