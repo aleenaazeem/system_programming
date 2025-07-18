@@ -1,0 +1,33 @@
+##!/bin/bash
+# Script : Countfiles.sh
+# This script will count the number of files with specific extension
+
+#This will be our step 1 to check if directory is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <directory_path> [file_extension]"
+    exit 1
+fi
+
+#We expand to full path Expand ~ if present
+DIR=$(eval echo "$1")
+
+#Check if the given path has a valid directory and if it exists
+if [ ! -d "$DIR" ]; then
+    echo "Error: '$DIR' is not a valid directory."
+    exit 1
+fi
+
+#Case 1: Extension is provided
+if [ -n "$2" ]; then
+    EXT="$2"
+     #We use the find recursively to check for the files
+    # -type f ensures only regular files are counted
+    # EXT matches file with a particular extension
+    COUNT=$(find "$DIR" -type f -name "*$EXT" | wc -l)
+    echo "Number of '$EXT' files in '$DIR': $COUNT"
+else
+    #Case 2: No extension provided, count all files only (not dirs)
+    COUNT=$(find "$DIR" -type f | wc -l)
+    echo "Number of files in '$DIR': $COUNT"
+fi
+
