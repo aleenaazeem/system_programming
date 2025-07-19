@@ -1,3 +1,4 @@
+//We have to implement a bash terminal
 #include <stdio.h>  //printf, fgets, perror
 #include <stdlib.h>   //exit, EXIT_FAILURE
 #include <unistd.h>   //fork, execvp, dup2, pipe
